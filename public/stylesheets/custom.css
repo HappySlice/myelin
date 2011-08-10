@@ -23,7 +23,9 @@ section {
 }
 
 section h1 {
-	font-size: 200%;
+	font-size: 350%;
+	color: #696565;
+	text-decoration: bold;
 }
 
 /* Links */
