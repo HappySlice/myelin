@@ -60,15 +60,12 @@ describe User do
     user_with_duplicate_email.should_not be_valid
   end
   
-<<<<<<< HEAD
-=======
   it "should reject dupliate User names" do
     User.create!(@attr)
     user_with_duplicate_name = User.new(@attr)
     user_with_duplicate_name.should_not be_valid
   end
   
->>>>>>> unique-name
   describe "passwords" do
     
     before(:each) do

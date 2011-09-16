@@ -4,11 +4,7 @@ describe Relationship do
 
   before(:each) do
     @follower = Factory(:user)
-<<<<<<< HEAD
-    @followed = Factory(:user, :email => Factory.next(:email))
-=======
     @followed = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
->>>>>>> unique-name
 
     @relationship = @follower.relationships.build(:followed_id => @followed.id)
   end
