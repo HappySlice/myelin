@@ -6,6 +6,13 @@ Factory.define :user do |user|
   user.password_confirmation "foobar"
 end
 
+<<<<<<< HEAD
+=======
+Factory.sequence :name do |n|
+  "User-#{n}"
+end
+
+>>>>>>> unique-name
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

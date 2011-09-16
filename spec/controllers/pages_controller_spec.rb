@@ -31,7 +31,11 @@ describe PagesController do
       
       before(:each) do
         @user = test_sign_in(Factory(:user))
+<<<<<<< HEAD
         other_user = Factory(:user, :email => Factory.next(:email))
+=======
+        other_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+>>>>>>> unique-name
         other_user.follow!(@user)
       end
       

@@ -16,11 +16,19 @@ describe UsersController do
       
       before(:each) do
         @user = test_sign_in(Factory(:user))
+<<<<<<< HEAD
         Factory(:user, :email => "another@example.com")
         Factory(:user, :email => "another@example.net")
         
         30.times do
           Factory(:user, :email => Factory.next(:email))
+=======
+        Factory(:user, :name => "com", :email => "another@example.com")
+        Factory(:user, :name => "net", :email => "another@example.net")
+        
+        30.times do
+          Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+>>>>>>> unique-name
         end
       end
       
@@ -128,7 +136,11 @@ describe UsersController do
     
     describe "when signed in as another user" do
       it "should be successful" do
+<<<<<<< HEAD
         test_sign_in(Factory(:user, :email => Factory.next(:email)))
+=======
+        test_sign_in(Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email)))
+>>>>>>> unique-name
         get :show, :id => @user
         response.should be_success
       end
@@ -302,7 +314,11 @@ describe UsersController do
     describe "for signed-in users" do
       
       before(:each) do
+<<<<<<< HEAD
         wrong_user = Factory(:user, :email => "user@example.net")
+=======
+        wrong_user = Factory(:user, :name => "manitou09876543210", :email => "user@example.net")
+>>>>>>> unique-name
         test_sign_in(wrong_user)
       end
       
@@ -342,7 +358,11 @@ describe UsersController do
      describe "as an admin user" do
        
        before(:each) do
+<<<<<<< HEAD
          @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+=======
+         @admin = Factory(:user, :name => "admin1234567890987654321", :email => "admin@example.com", :admin => true)
+>>>>>>> unique-name
          test_sign_in(@admin)
        end
        
@@ -384,7 +404,11 @@ describe UsersController do
 
        before(:each) do
          @user = test_sign_in(Factory(:user))
+<<<<<<< HEAD
          @other_user = Factory(:user, :email => Factory.next(:email))
+=======
+         @other_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+>>>>>>> unique-name
          @user.follow!(@other_user)
        end
 
