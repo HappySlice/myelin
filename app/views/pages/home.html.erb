@@ -1,0 +1,40 @@
+<% if signed_in? %>
+
+  <table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <h1 class="micropost">What's up?</h1>
+        <%= render 'shared/micropost_form' %>
+        <%= render 'shared/feed' %>
+      </td>
+	  <td class="sidebar round">
+	    <%= render 'shared/user_info' %>
+		<%= render 'shared/stats' %>
+	  </td>
+    </tr>
+  </table>
+
+<% else %>
+  
+	<font color ="#463E41">
+	<h1 align="center">
+		Myelin
+	</h1>
+	</font>
+	<br>
+	<p>
+		<h3 align="right">
+		<font color ="#3090C7">
+			Tap into the pulse of your local surroundings through the mobile web.
+		</font>
+		</h3>
+		<h4>
+		<font color ="#38ACEC">
+		Ask, look, share, and chat about the world around you as it is unfolding.
+		</font>
+		</h4>
+	</p>
+
+  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+
+<% end %>
