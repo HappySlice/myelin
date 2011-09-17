@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   
   before(:each) do
-    @attr = { :name => "Example User",
+    @attr = { :name => "ExampleUser",
               :email => "user@example.com",
               :password => "foobar",
               :password_confirmation => "foobar"
@@ -28,6 +28,22 @@ describe User do
     long_name = "a" * 51
     long_name_user = User.new(@attr.merge(:name => long_name))
     long_name_user.should_not be_valid
+  end
+  
+  it "should accept valid user names" do
+    names = %w[HappySloce usEr_3405_co01l_3 1234cool_]
+    names.each do |name|
+      valid_name_user = User.new(@attr.merge(:name => name))
+      valid_name_user.should be_valid
+    end
+  end
+  
+  it " should reject invalid user names" do
+    names = %w[Happy-Sloce coolbro@#$ yE,100]
+    names.each do |name|
+      invalid_name_user = User.new(@attr.merge(:name => name))
+      invalid_name_user.should_not be_valid
+    end
   end
   
   it "should accept valid email addresses" do
@@ -301,4 +317,3 @@ end
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
 #
-

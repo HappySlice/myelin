@@ -4,15 +4,23 @@
   </td>
   <td class="micropost">
     <span class="user">
+	<b>
       <%= link_to feed_item.user.name, feed_item.user %>
+    </b>
     </span>
+    <br>
+
     <% content_displayed = "False" %>
-    <% for username in User.all %>
+    <% users_reply_array = [] %>
+
+    <% for username in feed_item.user.following %>
 	  <% if feed_item.content.include?("@"+username.name) %>
-	    <% modified_content = feed_item.content.partition("@"+username.name) %>
-	    <span class="content"><%= link_to '@'+username.name, username %><%= modified_content[2] %></span>
-	    <% content_displayed = "True" %>
-	  <% break %>
+	    <% feed_item.content.match("@"+username.name) %>
+	    <% users_reply_array.insert(0,username) %>
+	    <%# content_displayed = "True" %>
+	    <% for user in users_reply_array %>
+	      <%= link_to "@"+user.name, user %>
+	    <% end %>
 	  <% end %>
 	<% end %>
 	<% if content_displayed == "False" %>
