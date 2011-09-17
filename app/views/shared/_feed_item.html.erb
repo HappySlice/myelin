@@ -6,7 +6,18 @@
     <span class="user">
       <%= link_to feed_item.user.name, feed_item.user %>
     </span>
-    <span class="content"><%= feed_item.content %></span>
+    <% content_displayed = "False" %>
+    <% for username in User.all %>
+	  <% if feed_item.content.include?("@"+username.name) %>
+	    <% modified_content = feed_item.content.partition("@"+username.name) %>
+	    <span class="content"><%= link_to '@'+username.name, username %><%= modified_content[2] %></span>
+	    <% content_displayed = "True" %>
+	  <% break %>
+	  <% end %>
+	<% end %>
+	<% if content_displayed == "False" %>
+	  <span class="content"><%= feed_item.content %></span>
+	<% end %>
     <span class="timestamp">
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
     </span>
