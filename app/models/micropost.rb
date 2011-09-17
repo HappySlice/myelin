@@ -1,17 +1,18 @@
 class Micropost < ActiveRecord::Base
   attr_accessible :content
-  
+
   belongs_to :user
-  
-  validates :content, :presence => true, :length => { :maximum => 140 }
-  validates :user_id, :presence => true
-  
+
+  validates_presence_of :user_id
+  validates_presence_of :content, :length => { :maximum => 140 }
+  validates_format_of :content, :with => /\w+/i
+
   default_scope :order => 'microposts.created_at DESC'
-  
+
   scope :from_users_followed_by, lambda { |user| followed_by(user) }
-  
+
   private
-  
+
     def self.followed_by(user)
       followed_ids = %(SELECT followed_id FROM relationships
                        WHERE follower_id = :user_id)
