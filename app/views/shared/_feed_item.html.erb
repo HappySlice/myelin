@@ -28,7 +28,9 @@
 	      <% end %>
 	      <%= split_content.flatten! %>
 	    <% end %>
+	<%# COMPARE WITHOUT CASE SENSITIVITY %>
 	    <% if part.casecmp("@"+username.name) == 0 %>
+	<%# ADD REPLY LINK (Appears at front of post) %>
 	      <span class="content"><%= link_to '@'+username.name, username %></span>
 	      <% part.clear %>
 	    <% end %>
