@@ -1,10 +1,14 @@
 SampleApp::Application.routes.draw do
   
+  #get "channels/new"
+
   resources :users do
     member do
       get :following, :followers
     end
   end
+  
+  resources :channels
   
   resources :sessions,    :only => [:new, :create, :destroy]
   resources :microposts,  :only => [:create, :destroy]
@@ -18,6 +22,7 @@ SampleApp::Application.routes.draw do
   match '/signup', :to =>'users#new'
   match '/signin', :to =>'sessions#new'
   match '/signout',:to =>'sessions#destroy'
+  match '/newchannel',:to =>'channels#new'
   
 
   # The priority is based upon order of creation:

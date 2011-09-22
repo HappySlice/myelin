@@ -10,7 +10,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110912223846) do
+ActiveRecord::Schema.define(:version => 20110922024855) do
+
+  create_table "channelrelationships", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "channelrelationships", ["followed_id"], :name => "index_channelrelationships_on_followed_id"
+  add_index "channelrelationships", ["follower_id", "followed_id"], :name => "index_channelrelationships_on_follower_id_and_followed_id", :unique => true
+  add_index "channelrelationships", ["follower_id"], :name => "index_channelrelationships_on_follower_id"
+
+  create_table "channels", :force => true do |t|
+    t.string   "name"
+    t.integer  "zone"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "channels", ["name"], :name => "index_channels_on_name", :unique => true
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -42,5 +63,6 @@ ActiveRecord::Schema.define(:version => 20110912223846) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
 
 end
