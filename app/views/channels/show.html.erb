@@ -1,1 +1,15 @@
-<%= @channel.name %>, <%= @channel.zone %>
+
+<table class="profile" summary="Profile information">
+  <tr>
+    <td class="main">
+      <h1>
+        <%= @channel.name %>
+      </h1>
+    </td>
+    <td class="sidebar round">
+      <strong>Name</strong> <%= @channel.name %><br />
+      <strong>URL</strong>  <%= link_to channel_path(@channel), @channel %><br />
+      <strong>Zone</strong> <%= @channel.zone %>
+    </td>
+  </tr>
+</table>
