@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to CloudMind!"
+      flash[:success] = "Welcome to Myelin!"
       redirect_to @user
     else
       @title = "Sign up"

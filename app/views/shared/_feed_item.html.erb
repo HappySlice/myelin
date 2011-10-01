@@ -4,23 +4,49 @@
   </td>
   <td class="micropost">
     <span class="user">
+	<b>
       <%= link_to feed_item.user.name, feed_item.user %>
+    </b>
     </span>
-    <% content_displayed = "False" %>
-    <% for username in User.all %>
-	  <% if feed_item.content.include?("@"+username.name) %>
-	    <% modified_content = feed_item.content.partition("@"+username.name) %>
-	    <span class="content"><%= link_to '@'+username.name, username %><%= modified_content[2] %></span>
-	    <% content_displayed = "True" %>
-	  <% break %>
+    <br>
+
+    <%# SPLIT POST IN TO ARRAY OF WORDS %>
+    <% split_content = feed_item.content.split %>
+    <%# CHECK TO SEE IF USER IS VALID AND MAKE LINKS %>
+	<% for part in split_content %>
+	  <% for username in feed_item.user.following %>
+	<%# CHECK FOR COMPOUNDED @s %>
+	    <% if part.count("@") > 1 %>
+	      <% compoundIndex = split_content.index(part) + 1 %>
+	      <% compound_at = part.split("@")[1,part.count("@")] %>
+	      <% part.clear %>
+	      <% for cName in compound_at %>
+	        <% cName.insert(0,"@") %>
+	        <% split_content.insert(compoundIndex, cName) %>
+	        <% part.clear %>
+	        <% compoundIndex += 1 %>
+	      <% end %>
+	      <%= split_content.flatten! %>
+	    <% end %>
+	<%# COMPARE WITHOUT CASE SENSITIVITY %>
+	    <% if part.casecmp("@"+username.name) == 0 %>
+	<%# ADD REPLY LINK (Appears at front of post) %>
+	      <span class="content"><%= link_to '@'+username.name, username %></span>
+	      <% part.clear %>
+	    <% end %>
 	  <% end %>
 	<% end %>
-	<% if content_displayed == "False" %>
-	  <span class="content"><%= feed_item.content %></span>
-	<% end %>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
-    </span>
+
+    <%# DISPLAY NON-LINK TEXT %>
+    <% for part in split_content %>
+      <% if !part.empty? %>
+        <span class="content"><%= part %></span>
+      <% end %>
+    <% end %>
+	<span class="timestamp">
+	Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
+	</span>
+
   </td>
   <% if current_user?(feed_item.user) %>
   <td>

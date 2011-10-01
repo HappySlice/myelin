@@ -27,9 +27,14 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Sign up")
   end
   
-  it "should have a signup page at '/signin' " do
+  it "should have a signin page at '/signin' " do
     get '/signin'
     response.should have_selector('title', :content => "Sign in")
+  end
+  
+  it "should have a newchannel page at '/newchannel' " do
+    get '/newchannel'
+    response.should have_selector('title', :content => "New channel")
   end
   
   it "should have the right links on the layout" do
@@ -86,6 +91,12 @@ describe "LayoutLinks" do
       visit root_path
       response.should have_selector("a", :href => users_path,
                                          :content => "Users")
+    end
+    
+    it "should have a create new channel link" do
+      visit root_path
+      response.should have_selector("a", :href => newchannel_path,
+                                         :content => "New channel")
     end
   end
 end

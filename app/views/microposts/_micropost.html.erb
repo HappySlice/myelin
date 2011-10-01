@@ -1,11 +1,45 @@
 <tr>
   <td class="micropost">
-    <span class="content"><%= micropost.content %></span>
+	    <br>
+	  <% user = micropost.user rescue User.find(micropost.user_id) %>
+	    <%# SPLIT POST IN TO ARRAY OF WORDS %>
+	    <% split_content = micropost.content.split %>
+	    <%# CHECK TO SEE IF USER IS VALID AND MAKE LINKS %>
+		<% for part in split_content %>
+		  <% for username in user.following %>
+		<%# CHECK FOR COMPOUNDED @s %>
+		    <% if part.count("@") > 1 %>
+		      <% compoundIndex = split_content.index(part) + 1 %>
+		      <% compound_at = part.split("@")[1,part.count("@")] %>
+		      <% part.clear %>
+		      <% for cName in compound_at %>
+		        <% cName.insert(0,"@") %>
+		        <% split_content.insert(compoundIndex, cName) %>
+		        <% part.clear %>
+		        <% compoundIndex += 1 %>
+		      <% end %>
+		      <%= split_content.flatten! %>
+		    <% end %>
+		<%# COMPARE WITHOUT CASE SENSITIVITY %>
+		    <% if part.casecmp("@"+username.name) == 0 %>
+		<%# ADD REPLY LINK (Appears at front of post) %>
+		      <span class="content"><%= link_to '@'+username.name, username %></span>
+		      <% part.clear %>
+		    <% end %>
+		  <% end %>
+		<% end %>
+
+	    <%# DISPLAY NON-LINK TEXT %>
+	    <% for part in split_content %>
+	      <% if !part.empty? %>
+	        <span class="content"><%= part %></span>
+	      <% end %>
+	    <% end %>
     <span class="timestamp">
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     </span>
   </td>
-  <% user = micropost.user rescue User.find(micropost.user_id) %>
+  <%# user = micropost.user rescue User.find(micropost.user_id) %>
   <% if current_user?(user) %>
   <td>
     <%= link_to "delete", micropost, :method => :delete,
