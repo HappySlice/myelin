@@ -29,6 +29,8 @@ describe Micropost do
     end
   end
 
+
+
   context "validations" do
 
     it "should have a user id" do

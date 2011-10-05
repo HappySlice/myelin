@@ -11,12 +11,20 @@ class PagesController < ApplicationController
   def contact
     @title = "Contact"
   end
-  
+
   def about
     @title = "About"
   end
-  
+
   def help
     @title = "Help"
+  end
+
+  def news
+    @title = "Press Releases"
+  end
+
+  def jobs
+    @title = "Join Us!"
   end
 end

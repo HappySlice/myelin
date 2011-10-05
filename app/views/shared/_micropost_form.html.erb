@@ -1,6 +1,6 @@
 <%= form_for @micropost do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
+  <%= f.hidden_field :zone_id, :value => @micropost.zone_id %>
     <%= f.text_area :content %>
   </div>
   <div class="actions">
